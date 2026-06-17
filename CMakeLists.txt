@@ -7,4 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(trade-sim
     src/main.cpp
+ "src/CsvMarketDataSource.cpp")
+
+ target_include_directories(trade-sim PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
