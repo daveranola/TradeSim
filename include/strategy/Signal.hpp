@@ -1,12 +1,12 @@
 #pragma once
 
 enum class SignalType {
-	Buy, 
-	Sell, 
-	Hold
+	BUY, 
+	SELL, 
+	HOLD
 };
 
 struct Signal {
-	SignalType type{ SignalType:Hold };
+	SignalType type{ SignalType::HOLD};
 	int quantity{ 0 };
 };
