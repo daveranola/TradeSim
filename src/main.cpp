@@ -1,29 +1,34 @@
 #include <iostream>
 
 #include "market/Bar.hpp"
-#include "strategy/Signal.hpp"
-#include "trading/Portfolio.hpp"
-#include "trading/PaperBroker.hpp"
+#include "strategy/MovingAverageCrossStrategy.hpp"
 
 int main() {
-    Portfolio portfolio(10000.0);
-    PaperBroker broker;
+    MovingAverageCrossStrategy strategy(3, 5, 10);
 
-    Bar bar;
-    bar.symbol = "AAPL";
-    bar.timestamp = "2024-01-01";
-    bar.close = 150.0;
+    std::vector<double> prices = { 100, 101, 102, 103, 104, 105 };
 
-    Signal buySignal;
-    buySignal.type = SignalType::BUY;
-    buySignal.quantity = 10;
+    for (double price : prices) {
+        Bar bar;
+        bar.symbol = "AAPL";
+        bar.close = price;
 
-    bool executed = broker.execute(buySignal, bar, portfolio);
+        Signal signal = strategy.onBar(bar);
 
-    std::cout << std::boolalpha;
-    std::cout << "Executed: " << executed << "\n";
-    std::cout << "Cash: " << portfolio.cash() << "\n";
-    std::cout << "AAPL position: " << portfolio.position("AAPL") << "\n";
+        std::cout << "Price: " << price << " Signal: ";
+
+        if (signal.type == SignalType::BUY) {
+            std::cout << "Buy ";
+        }
+        else if (signal.type == SignalType::SELL) {
+            std::cout << "Sell ";
+        }
+        else {
+            std::cout << "Hold ";
+        }
+
+        std::cout << signal.quantity << "\n";
+    }
 
     return 0;
 }
