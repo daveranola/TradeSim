@@ -1,3 +1,8 @@
+#pragma once
+
+#include <string>
+#include <unordered_map>
+
 class Portfolio {
 public:
 	explicit Portfolio(double initialCash);
